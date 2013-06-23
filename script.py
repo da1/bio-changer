@@ -4,8 +4,8 @@ import sys
 from optparse import OptionParser
 
 import tweepy
-from DescriptionEntity import DescriptionEntity
-from LocationEntity import LocationEntity
+from DescriptionModel import DescriptionModel
+from LocationModel import LocationModel
 from Config import Config
 
 def getApi(conf):
@@ -14,11 +14,19 @@ def getApi(conf):
     return tweepy.API(auth_handler=auth)
 
 def update(api=None):
-    desc = DescriptionEntity().get()
-    loc = LocationEntity().get()
+    desc = DescriptionModel().get()
+    loc = LocationModel().get()
     if api:
         api.update_profile(description=desc, location=loc)
     return {"description": desc, "location": loc }
+
+def outputLog(mode, log):
+    print "mode", mode
+    print "description", log["description"].encode('utf-8')
+    print "location", log["location"].encode('utf-8')
+
+def modeStr(options):
+    return "debug" if options.debug else "normal"
 
 if __name__ == "__main__":
     parser = OptionParser()
@@ -32,6 +40,4 @@ if __name__ == "__main__":
         api = getApi(Config())
 
     log = update(api)
-    print "debug" if options.debug else "normal"
-    print log["description"]
-    print log["location"]
+    outputLog(modeStr(options), log)

@@ -1,7 +1,7 @@
 #-*- coding:utf-8 -*-
-from EntityBase import EntityBase
+from BaseModel import BaseModel
 
-class DescriptionEntity(EntityBase):
+class DescriptionModel(BaseModel):
     __descriptions = [u"だるい", u"にょわー", u"ねばねばー"]
     def get(self):
         return self._random_pickup(self.__descriptions)

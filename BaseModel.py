@@ -1,6 +1,6 @@
 import random
 
-class EntityBase:
+class BaseModel:
     def _random_pickup(self, list):
         random.shuffle(list)
         if len(list) >= 1:
