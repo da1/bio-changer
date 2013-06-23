@@ -6,12 +6,7 @@ from optparse import OptionParser
 import tweepy
 from DescriptionModel import DescriptionModel
 from LocationModel import LocationModel
-from Config import Config
-
-def getApi(conf):
-    auth = tweepy.OAuthHandler(conf.CONSUMER_KEY,conf.CONSUMER_SECRET)
-    auth.set_access_token(conf.ACCESS_TOKEN, conf.ACCESS_TOKEN_SECRET)
-    return tweepy.API(auth_handler=auth)
+import util
 
 def update(api=None):
     desc = DescriptionModel().get()
@@ -37,7 +32,7 @@ if __name__ == "__main__":
 
     api = None
     if not options.debug:
-        api = getApi(Config())
+        api = util.get_api()
 
     log = update(api)
     outputLog(modeStr(options), log)
