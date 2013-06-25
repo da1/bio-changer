@@ -4,9 +4,9 @@ import sys
 from optparse import OptionParser
 
 import tweepy
-from DescriptionModel import DescriptionModel
-from LocationModel import LocationModel
-import util
+from modules.DescriptionModel import DescriptionModel
+from modules.LocationModel import LocationModel
+from modules import util
 
 def update(api=None):
     desc = DescriptionModel().get()

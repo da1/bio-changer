@@ -1,5 +1,5 @@
 import tweepy
-from Config import Config
+from modules.Config import Config
 import random
 
 def get_api(conf=None):

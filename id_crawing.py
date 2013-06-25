@@ -1,5 +1,5 @@
 import tweepy
-import util
+from modules import util
 import redis
 from optparse import OptionParser
 import sys
