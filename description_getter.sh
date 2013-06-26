@@ -1,5 +1,5 @@
-SCRIPT_DIR=./
-OUTPUT_FILE=./output.txt
+SCRIPT_DIR=$PWD/${0%/*}
+OUTPUT_FILE=$SCRIPT_DIR/output.txt
 TMP_FILE=/tmp/tmp.txt
 
 python $SCRIPT_DIR/description_getter.py | sed 's/^  *//g' >> $OUTPUT_FILE

@@ -1,5 +1,6 @@
 *.py[cod]
 config.ini
+output.txt
 
 # C extensions
 *.so
