@@ -1,4 +1,5 @@
-SCRIPT_DIR=$PWD/${0%/*}
+set e
+SCRIPT_DIR=${0%/*}
 OUTPUT_FILE=$SCRIPT_DIR/output.txt
 TMP_FILE=/tmp/tmp.txt
 

@@ -14,8 +14,12 @@ def set_ids(redis_cli, ids):
 
 def get_followers_ids(api, user_id):
     user_obj = api.get_user(user_id)
-    followers_ids = user_obj.followers_ids()
-    print user_obj.screen_name, "has", len(followers_ids), "follower"
+    followers_ids = []
+    try:
+        followers_ids = user_obj.followers_ids()
+        print user_obj.screen_name, "has", len(followers_ids), "follower"
+    except TweepError, e:
+        sys.stderr.write(e)
     return followers_ids
 
 if __name__ == "__main__":
