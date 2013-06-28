@@ -6,7 +6,7 @@ from optparse import OptionParser
 import re
 
 def remove_url(text):
-    pattern = re.compile('https?://\S+$')
+    pattern = re.compile('https?:\S+$')
     return pattern.sub('', text)
 
 def word_filter(word):

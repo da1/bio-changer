@@ -4,12 +4,12 @@ import sys
 from optparse import OptionParser
 
 import tweepy
-from modules.DescriptionModel import DescriptionModel
+from modules.SlashDescriptionModel import SlashDescriptionModel
 from modules.LocationModel import LocationModel
 from modules import util
 
 def update(api=None):
-    desc = DescriptionModel().get()
+    desc = SlashDescriptionModel().slash_gets()
     loc = LocationModel().get()
     if api:
         api.update_profile(description=desc, location=loc)
