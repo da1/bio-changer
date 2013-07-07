@@ -1,5 +1,6 @@
 *.py[cod]
 config.ini
+config.yaml
 output.txt
 
 # C extensions
