@@ -5,7 +5,6 @@ class Config:
     """ twitter config """
     __FILE_NAME = "/config.yaml"
     def __init__(self):
-        conf = ConfigParser.SafeConfigParser()
         conf = yaml.load(open(os.path.dirname(__file__) + self.__FILE_NAME).read())
         self.__CONSUMER_KEY    = conf["config"]["consumer_key"]
         self.__CONSUMER_SECRET = conf["config"]["consumer_secret"]
