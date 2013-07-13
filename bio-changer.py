@@ -4,12 +4,13 @@ import sys
 from optparse import OptionParser
 
 import tweepy
+from modules.DescriptionModel import DescriptionModel
 from modules.SlashDescriptionModel import SlashDescriptionModel
 from modules.LocationModel import LocationModel
 from modules import util
 
-def update(api=None):
-    desc = SlashDescriptionModel().slash_gets()
+def update(api=None, models=[]):
+    desc = '/'.join(map((lambda m:m.get()), models))
     loc = LocationModel().get()
     if api:
         api.update_profile(description=desc, location=loc)
@@ -34,5 +35,5 @@ if __name__ == "__main__":
     if not options.debug:
         api = util.get_api()
 
-    log = update(api)
+    log = update(api, [DescriptionModel(), SlashDescriptionModel()])
     outputLog(modeStr(options), log)
