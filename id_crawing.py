@@ -15,7 +15,12 @@ def get_followers_ids(api, user_id):
     return followers_ids
 
 if __name__ == "__main__":
-    init_user_screen_name = ''
+    parser = OptionParser()
+    parser.add_option("-n", "--name",
+            action="store", type="string", dest="name", default="")
+    (options, args) = parser.parse_args()
+
+    init_user_screen_name = options.name
     api = util.get_api()
 
     users = Users()
