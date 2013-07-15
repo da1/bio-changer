@@ -25,20 +25,32 @@ def split_descriptions(description):
         return []
     return desc
 
+def get_user(options, users=None):
+    if options.no_redis:
+        return options.name
+    if users == None:
+        users = Users()
+    if users.dbsize() == 0:
+        raise Exception, "redis key is empty"
+    return util.randomly_select(users.get_keys())
+
 if __name__ == "__main__":
     parser = OptionParser()
     parser.add_option("-d", "--debug",
         action="store_true", dest="debug", default=False,
         help="debug mode: twitter api no use")
+    parser.add_option("-n", "--name",
+            action="store", type="string", dest="name", default="")
+    parser.add_option("-r", "--no-redis",
+            action="store_true", dest="no_redis", default=False)
     (options, args) = parser.parse_args()
 
-    users = Users()
-    if users.dbsize() == 0:
-        sys.stderr.write("redis key is empty\n")
-        sys.exit(0)
+    users = None
+    if not options.no_redis:
+        users = Users()
 
+    user_id = get_user(options, users)
     api = util.get_api()
-    user_id = util.randomly_select(users.get_keys())
     user = api.get_user(user_id)
 
     if options.debug:
@@ -47,10 +59,11 @@ if __name__ == "__main__":
         print "============="
 
     descriptions = split_descriptions(user.description)
-    if len(descriptions) == 0:
-        users.set_miss(user_id)
-    else:
-        users.set_slash(user_id)
+    if not options.no_redis:
+        if len(descriptions) == 0:
+            users.set_miss(user_id)
+        else:
+            users.set_slash(user_id)
 
     for d in descriptions:
         print d.encode('utf-8')
