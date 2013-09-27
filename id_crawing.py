@@ -11,7 +11,7 @@ def get_followers_ids(api, user_id):
         followers_ids = user_obj.followers_ids()
         print user_obj.screen_name, "has", len(followers_ids), "follower"
     except tweepy.TweepError, e:
-        sys.stderr.write(e)
+        pass
     return followers_ids
 
 if __name__ == "__main__":

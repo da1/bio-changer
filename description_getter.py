@@ -51,7 +51,10 @@ if __name__ == "__main__":
 
     user_id = get_user(options, users)
     api = util.get_api()
-    user = api.get_user(user_id)
+    try:
+        user = api.get_user(user_id)
+    except tweepy.error.TweepError, e:
+        pass
 
     if options.debug:
         print "=== debug ==="
