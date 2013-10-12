@@ -4,6 +4,7 @@ import sys
 from optparse import OptionParser
 import re
 from modules.db.users import Users
+import logging
 
 def remove_url(text):
     pattern = re.compile('https?:\S+$')
@@ -45,6 +46,10 @@ if __name__ == "__main__":
             action="store_true", dest="no_redis", default=False)
     (options, args) = parser.parse_args()
 
+    LOG_FILENAME = 'log/update.log'
+    formatter = "time:%(asctime)s\tname:%(name)s\tlevelname:%(levelname)s\tmessage:%(message)s"
+    logging.basicConfig(filename=LOG_FILENAME,level=logging.INFO,format=formatter)
+
     users = None
     if not options.no_redis:
         users = Users()
@@ -69,4 +74,6 @@ if __name__ == "__main__":
             users.set_slash(user_id)
 
     for d in descriptions:
-        print d.encode('utf-8')
+        d_utf8 = d.encode('utf-8')
+        print d_utf8
+        logging.info(d_utf8)

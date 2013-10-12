@@ -2,6 +2,7 @@
 config.ini
 config.yaml
 output.txt
+log/*.log
 
 # C extensions
 *.so
