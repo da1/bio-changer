@@ -47,7 +47,7 @@ if __name__ == "__main__":
     (options, args) = parser.parse_args()
 
     LOG_FILENAME = 'log/update.log'
-    formatter = "time:%(asctime)s\tname:%(name)s\tlevelname:%(levelname)s\tmessage:%(message)s"
+    formatter = "time:%(asctime)s\tname:%(name)s\tlevelname:%(levelname)s\t%(message)s"
     logging.basicConfig(filename=LOG_FILENAME,level=logging.INFO,format=formatter)
 
     users = None
@@ -73,7 +73,7 @@ if __name__ == "__main__":
         else:
             users.set_slash(user_id)
 
+    screen_name = user.screen_name
     for d in descriptions:
-        d_utf8 = d.encode('utf-8')
-        print d_utf8
-        logging.info(d_utf8)
+        print screen_name, d.encode('utf-8')
+        logging.info("screen_name:%s\tdescription:%s"%(screen_name, d))
