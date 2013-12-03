@@ -46,7 +46,7 @@ if __name__ == "__main__":
             action="store_true", dest="no_redis", default=False)
     (options, args) = parser.parse_args()
 
-    LOG_FILENAME = 'log/update.log'
+    LOG_FILENAME = 'bio-changer/log/update.log'
     formatter = "time:%(asctime)s\tname:%(name)s\tlevelname:%(levelname)s\t%(message)s"
     logging.basicConfig(filename=LOG_FILENAME,level=logging.INFO,format=formatter)
 
