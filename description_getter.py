@@ -61,7 +61,7 @@ if __name__ == "__main__":
     except tweepy.error.TweepError, e:
         pass
 
-    screen_name = user.screen_name if user else ""
+    screen_name = user.screen_name if 'user' in locals() else ""
     logging.info("user_id:%s\tscreen_name:%s"%(user_id, screen_name))
 
     if options.debug:
