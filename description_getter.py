@@ -26,14 +26,17 @@ def split_descriptions(description):
         return []
     return desc
 
-def get_user(options, users=None):
-    if options.no_redis:
-        return options.name
+def get_user(users=None):
     if users == None:
         users = Users()
     if users.dbsize() == 0:
         raise Exception, "redis key is empty"
     return util.randomly_select(users.get_keys())
+
+def showDescriptions(screen_name, descriptions):
+    for d in descriptions:
+        print screen_name, d.encode('utf-8')
+        logging.info("screen_name:%s\tdescription:%s"%(screen_name, d))
 
 if __name__ == "__main__":
     parser = OptionParser()
@@ -51,31 +54,33 @@ if __name__ == "__main__":
     logging.basicConfig(filename=LOG_FILENAME,level=logging.INFO,format=formatter)
 
     users = None
+    user_id = options.name
     if not options.no_redis:
         users = Users()
+        user_id = get_user(users)
 
-    user_id = get_user(options, users)
     api = util.get_api()
+    screen_name = ""
+    description = ""
     try:
         user = api.get_user(user_id)
+        screen_name = user.screen_name
+        description = user.description
     except tweepy.error.TweepError, e:
         pass
 
-    screen_name = user.screen_name if 'user' in locals() else ""
     logging.info("user_id:%s\tscreen_name:%s"%(user_id, screen_name))
 
     if options.debug:
         print "=== debug ==="
-        print user.description.encode('utf-8')
+        print description.encode('utf-8')
         print "============="
 
-    descriptions = split_descriptions(user.description)
+    descriptions = split_descriptions(description)
     if not options.no_redis:
         if len(descriptions) == 0:
             users.set_miss(user_id)
         else:
             users.set_slash(user_id)
 
-    for d in descriptions:
-        print screen_name, d.encode('utf-8')
-        logging.info("screen_name:%s\tdescription:%s"%(screen_name, d))
+    showDescriptions(screen_name, descriptions)
