@@ -35,7 +35,7 @@ def get_user(users=None):
 
 def showDescriptions(screen_name, descriptions):
     for d in descriptions:
-        print screen_name, d.encode('utf-8')
+        print d.encode('utf-8')
         logging.info("screen_name:%s\tdescription:%s"%(screen_name, d))
 
 if __name__ == "__main__":
