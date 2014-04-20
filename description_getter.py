@@ -7,11 +7,18 @@ from modules.db.users import Users
 import logging
 
 def remove_url(text):
-    pattern = re.compile('https?:\S+$')
+    pattern = re.compile('https?:.+?[ \n]')
     return pattern.sub('', text)
 
-def word_filter(word):
+def word_length(word):
     return 0 < len(word) < 10
+
+def char_type(word):
+    pattern = re.compile(u'[\x00-\x7F\u30A0-\u30FF\u3040-\u309F\u4E00-\u9FFF]+')
+    return pattern.match(word)
+
+def word_filter(word):
+    return word_length(word) and char_type(word)
 
 def split_slash(description):
     no_url_description = remove_url(description)
